@@ -1,9 +1,11 @@
 export default function EntryList() {
   return (
-    <div className="container hidden" data-view="entries">
-      <EntriesTextAndButton />
-      <ListOfEntries />
-    </div>
+    <>
+      <div className="container" data-view="entries">
+        <EntriesTextAndButton />
+        <ListOfEntries />
+      </div>
+    </>
   );
 }
 

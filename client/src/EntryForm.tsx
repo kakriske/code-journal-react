@@ -1,9 +1,12 @@
 import placeHolderImage from './placeholder-image-square.jpg';
 
-export default function EntryForm() {
+interface EntryFormProps {
+  onClick: () => void;
+}
+export default function EntryForm({ onClick }: EntryFormProps) {
   return (
     <>
-      <Header />
+      <Header onClick={onClick} />
       <div className="container" data-view="entry-form">
         <NewEntryText />
         <Form />
@@ -22,14 +25,18 @@ function NewEntryText() {
   );
 }
 
-function Header() {
+interface HeaderProps {
+  onClick: () => void;
+}
+
+function Header({ onClick }: HeaderProps) {
   return (
     <header className="header purple-background">
       <div className="container">
         <div className="row">
           <div className="column-full d-flex align-center">
             <h1 className="white-text">Code Journal</h1>
-            <h3>
+            <h3 onClick={onClick}>
               <a id="entriesLink" className="entries-link white-text" href="#">
                 Entries
               </a>

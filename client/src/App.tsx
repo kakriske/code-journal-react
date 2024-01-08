@@ -3,12 +3,20 @@ import placeHolderImage from './placeholder-image-square.jpg';
 import EntryForm from './EntryForm';
 import EntryList from './EntryList';
 import Header from './Header';
-import { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 
 function App() {
   const [EntriesClick, setEntriesClick] = useState(false);
   const [url, setUrl] = useState('');
   const [placeHolder, setPlaceHolder] = useState(placeHolderImage);
+  const [title, setTitle] = useState('');
+  const [note, setNote] = useState('');
+
+  function handleTitleChange(e: ChangeEvent<HTMLInputElement>) {
+    const title = e.target.value;
+    setTitle(title);
+    return title;
+  }
 
   function handleClick() {
     setEntriesClick(true);
@@ -29,6 +37,17 @@ function App() {
     return image;
   }
 
+  function handleNotesOnChange(e: ChangeEvent<HTMLTextAreaElement>) {
+    const note = e.target.value;
+    setNote(note);
+    return note;
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    console.log(title);
+  }
+
   return (
     <>
       <Header onClick={handleClick} />
@@ -37,8 +56,13 @@ function App() {
       ) : (
         <EntryForm
           onChange={handlePhotoUrlInput}
+          onTitleChange={handleTitleChange}
           url={url}
           placeHolder={placeHolder}
+          title={title}
+          notesOnChange={handleNotesOnChange}
+          note={note}
+          onSubmit={handleSubmit}
         />
       )}
     </>

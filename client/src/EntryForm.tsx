@@ -1,21 +1,40 @@
-import { ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 
 interface EntryFormProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   url: string;
   placeHolder: string;
+  title: string;
+  onTitleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  note: string;
+  notesOnChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  onSubmit: (e: React.FormEvent) => void;
 }
 
 export default function EntryForm({
   onChange,
   url,
   placeHolder,
+  title,
+  onTitleChange,
+  note,
+  notesOnChange,
+  onSubmit,
 }: EntryFormProps) {
   return (
     <>
       <div className="container" data-view="entry-form">
         <NewEntryText />
-        <Form onChange={onChange} url={url} placeHolder={placeHolder} />
+        <Form
+          onChange={onChange}
+          url={url}
+          placeHolder={placeHolder}
+          title={title}
+          onTitleChange={onTitleChange}
+          note={note}
+          onNotesChange={notesOnChange}
+          onSubmit={onSubmit}
+        />
       </div>
     </>
   );
@@ -35,9 +54,23 @@ interface FormProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   url: string;
   placeHolder: string;
+  title: string;
+  onTitleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onNotesChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  note: string;
+  onSubmit: (e: React.FormEvent) => void;
 }
 
-function Form({ onChange, url, placeHolder }: FormProps) {
+function Form({
+  onChange,
+  url,
+  placeHolder,
+  title,
+  onTitleChange,
+  onNotesChange,
+  note,
+  onSubmit,
+}: FormProps) {
   return (
     <form id="entryForm">
       <div className="row margin-bottom-1">
@@ -59,8 +92,10 @@ function Form({ onChange, url, placeHolder }: FormProps) {
             type="text"
             id="formTitle"
             name="formTitle"
+            value={title}
+            onChange={onTitleChange}
           />
-          <label className="margin-bottom-1 d-block" htmlFor="photoUrk">
+          <label className="margin-bottom-1 d-block" htmlFor="photoUrl">
             Photo URL
           </label>
           <input
@@ -85,7 +120,9 @@ function Form({ onChange, url, placeHolder }: FormProps) {
             name="formNotes"
             id="formNotes"
             cols={30}
-            rows={10}></textarea>
+            rows={10}
+            defaultValue={note}
+            onChange={onNotesChange}></textarea>
         </div>
       </div>
       <div className="row">
@@ -96,7 +133,10 @@ function Form({ onChange, url, placeHolder }: FormProps) {
             id="deleteEntry">
             Delete Entry
           </button>
-          <button className="input-b-radius text-padding purple-background white-text">
+          <button
+            type="submit"
+            className="input-b-radius text-padding purple-background white-text"
+            onSubmit={onSubmit}>
             SAVE
           </button>
         </div>

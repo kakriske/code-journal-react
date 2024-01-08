@@ -1,15 +1,21 @@
-import placeHolderImage from './placeholder-image-square.jpg';
+import { ChangeEvent } from 'react';
 
 interface EntryFormProps {
-  onClick: () => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  url: string;
+  placeHolder: string;
 }
-export default function EntryForm({ onClick }: EntryFormProps) {
+
+export default function EntryForm({
+  onChange,
+  url,
+  placeHolder,
+}: EntryFormProps) {
   return (
     <>
-      <Header onClick={onClick} />
       <div className="container" data-view="entry-form">
         <NewEntryText />
-        <Form />
+        <Form onChange={onChange} url={url} placeHolder={placeHolder} />
       </div>
     </>
   );
@@ -25,30 +31,13 @@ function NewEntryText() {
   );
 }
 
-interface HeaderProps {
-  onClick: () => void;
+interface FormProps {
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  url: string;
+  placeHolder: string;
 }
 
-function Header({ onClick }: HeaderProps) {
-  return (
-    <header className="header purple-background">
-      <div className="container">
-        <div className="row">
-          <div className="column-full d-flex align-center">
-            <h1 className="white-text">Code Journal</h1>
-            <h3 onClick={onClick}>
-              <a id="entriesLink" className="entries-link white-text" href="#">
-                Entries
-              </a>
-            </h3>
-          </div>
-        </div>
-      </div>
-    </header>
-  );
-}
-
-function Form() {
+function Form({ onChange, url, placeHolder }: FormProps) {
   return (
     <form id="entryForm">
       <div className="row margin-bottom-1">
@@ -56,7 +45,7 @@ function Form() {
           <img
             className="input-b-radius form-image"
             id="formImage"
-            src={placeHolderImage}
+            src={placeHolder}
             alt="image of entry image"
           />
         </div>
@@ -80,6 +69,8 @@ function Form() {
             type="text"
             id="formURL"
             name="formURL"
+            value={url}
+            onChange={onChange}
           />
         </div>
       </div>
